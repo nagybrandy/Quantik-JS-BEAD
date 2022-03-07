@@ -97,7 +97,7 @@ Legyen lehetőségünk félbehagyni és elmenteni az aktuális játékot a böng
 
 ### Plusz feladatok plusz pontokért
 
-- **1 játékos mód**:
+- **Egyjátékos mód**:
   - a játék nyitólapján lehessen ezt kiválasztani. 
   - ekkor a második játékos a gép lesz, aki valamilyen logika szerint dobja a korongot
   - a gép is emberi idő alatt végezze a dolgát, azaz kis idő teljen el az oszlop kiválasztása és a dobás között
