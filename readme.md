@@ -1,7 +1,7 @@
 # QUANTIK
 
 ## Leírás
-A játék egy 4x4-es táblán játszódik, ami 4 egyenlő, 2x2-es részre van bontva. A játékhoz négy, egymástól könnyen megkülönböztethető, alakzatot használhatunk, jelen esetben négyzetet, kört, háromszöget és X-et. Mind a két játékosnak minden alakzatból 2-2 bábuja van, így összesen 8 alakzat található meg egy színből. A célja az, hogy elsőként helyezzék le a játékosok a negyedik, többitől különböző formát egy sorba, oszlopba, vagy négyzet alakú területre.
+A játék egy 4x4-es táblán játszódik, ami 4 egyenlő, 2x2-es részre van bontva. A játékhoz négy, egymástól könnyen megkülönböztethető, alakzatot használhatunk, jelen esetben négyzetet, kört, háromszöget és X-et. Mind a két játékosnak minden alakzatból 2-2 bábuja van, így összesen 8 alakzat található meg egy színből. A célja az, hogy elsőként helyezzék le a játékosok a negyedik, többitől különböző formát egy sorba, oszlopba, vagy négyzet alakú területre. Ha egy cellára lehelyeztünk egy alakzatot, akkor annak sorába, oszlopába, vagy négyzet alakú területére nem tudja már egyik játékos sem még egyszer ugyanazt az alakzatot letenni.
 
 ![](pics/base.png)
 
@@ -31,8 +31,6 @@ A játék nyitólapján jelenjen meg
 
 **Két játékos** lehet. A nyitólapon megadható a nevük, alapértelmezetten "1. játékos" és "2. játékos" legyen.
 
-Legyen egy lista a korábbi játékospárokkal feltöltve. A lista tartalmazza az adott pár nevét, illetve hogy hányszor nyert az egyik, hányszor a másik, hányszor volt döntetlen. A sorrend is fontos, azaz Piroska-Farkas és Farkas-Piroska különböző pár, mert mindig az 1. játékos kezd. A lista egy elemére kattintva a nevek automatikusan kitöltődnek. (Pl. Piroska-Farkas párra kattintva az első játékos helyére a Piroska, a 2. helyére a Farkas név kerül.) Ezzel megkönnyítjük a visszatérő játékospárok nevének beírását.
-
 Ha vannak félbehagyott játékok, akkor azoknak a listája is ezen az oldalon jelenik meg. A lista egy eleme a mentés dátumát, és a kitöltés %-os arányát tartalmazza. Rákattintva az adott állás töltődik be.
 
 Egy **"Start"** feliratú gomb lenyomására indul a játék.
@@ -43,7 +41,7 @@ Egy **"Start"** feliratú gomb lenyomására indul a játék.
 - Ha a játékot mentett állásból indítottuk, akkor az adott állás töltődik be.
 - A felületen jelezni kell, hogy melyik játékos van soron. (Ezt talán legegyszerűbb színekkel jelezni.) Mindig az 1. játékos kezd.
 - A bábuk lerakásakor az egeret a tábla felett húzogatva, az adott cellában megjelenik a bábu. Kattintásra a bábut le tudjuk helyezni a cellába.
-- A korong pozícióját a jobbra-balra-fel-le nyilakkal is mozgathatjuk. Space vagy ENTER megnyomására a korong bedobásra kerül.
+- A bábu pozícióját a jobbra-balra-fel-le nyilakkal is mozgathatjuk. Space vagy ENTER megnyomására a bábu lerakásra kerül.
 - Ha valamelyik játékosnak egy sorban, egy oszlopban, vagy egy területen összejön a 4 különböző alakzat, akkor az a játékos nyer, és a játék véget ér. A győztes játékos nevét írjuk ki. Majd egy kattintásra térjünk vissza a nyitólapra.
 - Helyi tárolóba növeljük el az adott párnál a győztes játékos győzelmeinek számát.
 - Ha döntetlen, akkor ezt kell kiírni, és növeljük a döntetlenek számát.
@@ -61,9 +59,41 @@ A játéktérnek a következő elemeket kell tartalmaznia:
 
 Az éppen soros játékost valamilyen módon jelezzük. Ő lép.
 
+### A játék mechanizmusa
+
+Szeretnénk, ha valamilyen módon jelezve lenne a játékos számára, hogy egy-egy adott mezőre milyen bábukat tud letenni a továbbiakban. Ezt bármilyen módon megteheted, például:
+- Kiválasztasz egy helyet, majd a játék kijelzi, hogy arra a helyre milyen alakzatokat tudsz még letenni
+- Kiválasztasz egy bábut, és a program megmutatja, hogy milyen helyekre tudod még azt letenni.
+- Összepárosítasz egy helyet és egy bábut, és ha nem helyezhető le oda, akkor jelzi a program, hogy nem tudja oda letenni, ha jó helyen van, akkor pedig lerakja.
+
 ### A játék vége
 
-A játék végén írjuk ki a győztes játékos számát, majd legyen lehetőség új játékot kezdeni.
+A játék végén írjuk ki a győztes játékos számát és nevét, majd legyen lehetőség új játékot kezdeni.
+
+### Statisztika
+
+Az oldal tárolja egy JSON fájlban azt, hogy az adott játékospár milyen hányszor és milyen eredménnyel játszott egymás ellen. Ha például Piroska nyert Farkas ellen már egyszer, és az új játékban ismét Piroska nyer, akkor az állás 2-0 Piroskának. (A Piroska-Farkas és a Farkas-Piroska játékospár két különböző játékospárnak minősül, hiszen más fog kezdeni.)
+
+Példa JSON fájl:
+```json
+[
+    {
+        "player1" : "Piroska",
+        "player2" : "Farkas",
+        "player1wins" : 3,
+        "player2wins" : 2
+    },
+    {
+        "player1" : "Kismalac1",
+        "player2" : "Kismalac2",
+        "player1wins" : 5,
+        "player2wins" : 10
+    }
+]
+```
+### A játék mentése
+
+Legyen lehetőségünk félbehagyni és elmenteni az aktuális játékot a böngésző helyi tárolójába. A főképernyőn pedig jelezzük, ha van ilyen mentés, és legyen lehetőség a mentett játékot folytatni.
 
 ### Plusz feladatok plusz pontokért
 
@@ -73,8 +103,6 @@ A játék végén írjuk ki a győztes játékos számát, majd legyen lehetős�
   - a gép is emberi idő alatt végezze a dolgát, azaz kis idő teljen el az oszlop kiválasztása és a dobás között
 - **Időlimit**
   - lehessen megadni a főoldalon egy időlimitet, amennyit egy-egy játékos összesen gondolkodhat a játék során. Ha ez letelt, akkor automatikusan veszít.
-- **A játék mentése**
-  - lehetőségünk félbehagyni és elmenteni az aktuális játékot a böngésző helyi tárolójába. A főképernyőn pedig jelezzük, ha van ilyen mentés, és legyen lehetőség a mentett játékot folytatni.
 
 ## További elvárások
 
@@ -127,37 +155,26 @@ Egy nagyobb feladatnál nem látunk át előre mindent. A fenti lépéseket lehe
 
 A feladat megoldásával 20 pont szerezhető. Vannak minimum elvárások, melyek teljesítése nélkül a beadandó nem elfogadható. A plusz feladatokért további 5 pont szerezhető. Azaz ha valaki mindent megcsinál a beadandóra 25 pontot kaphat.
 
-### Minimálisan teljesítendő (enélkül nem fogadjuk el, 8 pont)
+### Minimálisan teljesítendő (enélkül nem fogadjuk el, 6 pont)
 
 - Egyéb: A "További elvárások" részben szereplő `README.md` fájl megfelelően kitöltve szerepel a feltöltött csomagban (0 pont)
 - Játéktér: A játéktér megjelenik. (0 pont)
-- Játéktér: Egy 7x7-es rácsban megjelennek a fix elemek. (1 pont)
-- Játéktér: Ugyanebben a rácsban megjelennek véletlenszerűen forgatva és elhelyezve a mozgatható elemek. (2 pont)
-- Játéktér: A rácsra fel van helyezve legalább 3 kincs véletlen helyre (kivéve a sarkokat) (0,5 pont)
-- Játéktér: A rácsra fel van helyezve legalább 1 játékos figurája (0,5 pont)
-- Katakomba átalakítása: A kimaradt szoba becsúsztatható egy mozgatható sorba vagy oszlopba. A katakomba szobái helyesen változnak. (2 pont)
-- Lépés: A figurával szabályosan lehet lépni a szomszédos mező valamelyikére. (2 pont)
+- Játéktér: Egy 4x4-es rács megjelenik, és látják a játékosok, hogy milyen alakzatok közül tudnak választani. (1 pont)
+- Játéktér: A rácsba el tudjuk helyezni a kiválasztott alakzatainkat felváltva. (2 pont)
+- Játéktér: A győzelmet vagy vereséget érzékeli az oldal és kiírja.(3 pont)
 
-### Az alap feladatok (12 pont)
+### Az alap feladatok (14 pont)
 
-- Kezdőképernyő: játékosszám beállítása (0,5 pont)
-- Kezdőképernyő: játékosonkénti kincskártyák számának beállítása (0,5 pont)
+- Kezdőképernyő: játékosnév beállítása (0,5 pont)
 - Kezdőképernyő: Start gombra megjelenik a játéktér (0,5 pont)
 - Kezdőképernyő: megtekinthető a játékleírás (0,5 pont)
-- Játéktér: a kincsek a beállításoknak megfelelően jelennek meg (0,5 pont)
-- Játéktér: a figurák a sarkokban megjelennek (0,5 pont)
-- Játéktér: kimaradt elem megjelenik (0,5 pont)
-- Játéktér: játékosadatok megjelennek (0,5 pont)
+- Játéktér: a játékosnevek a beállításoknak megfelelően jelennek meg, jól elkülöníthető a játékosok adatlapja  (0,5 pont)
+- Játéktér: A start gombra kattintva új játék indítható (0,5 pont)
+- Játéktér: a játék folyamán folyamatosan frissül, hogy milyen alakzataink  maradtak hátra (1 pont)
 - Játéktér: jelezve van, hogy melyik az aktuális játékos (0,5 pont)
-- Katakomba átalakítása: a kimaradt szoba forgatható becsúsztatás előtt (0,5 pont)
-- Katakomba átalakítása: a szobák eltolása animációval történik (1 pont)
-- Katakomba átalakítása: a kincsek abban a szobában maradnak, ahova az elején generáltuk őket (0,5 pont)
-- Katakomba átalakítása: leeső figura ciklikusan a másik oldalra kerül (0,5 pont)
-- Lépés: a szomszédos elérhető szobák jelölése (0,5 pont)
-- Lépés: a lépés animációval történik (1 pont)
-- Lépés: ha elérendő kincskártyára lépünk, akkor a játékos adatlapja helyesen változik (0,5 pont)
-- Lépés: ha minden kincs megvan, és a kiindulási pontra léptünk, akkor a játék vége van (0,5 pont)
-- Lépés: több figura jól jelenik meg egy mezőn (0,5 pont)
+- Játék mechanikája: a játék valamilyen módon megjeleníti nekünk, hogy melyik cellára milyen alakzatot tudunk már csak lehelyezni (3 pont)
+- Mentés: A játék félbehagyható, mentés után a játék a félbehagyott játékok listájában megjelenik a keződőképernyőn, és a kezdőoldalról újra betölthető. (3 pont)
+- Vége: a játék végén az adott játékospárra vonatkozó statisztika mentésre kerül, kijelzi azt, és a statisztikát a főoldalról is elérjük. (2 pont)
 - Vége: a győztes játékos száma megjelenik (0,5 pont)
 - Vége: egy gombra kattintva a játék újrakezdhető a kezdőképernyőtől (0,5 pont)
 - Egyéb: Igényes kialakítás (1 pont)
@@ -167,10 +184,8 @@ A feladat megoldásával 20 pont szerezhető. Vannak minimum elvárások, melyek
 
 ### Plusz feladatok (plusz 5 pont)
 
-- Lépés: minden elérhető szoba jelölése (3 pont)
-- Mentés: játék közben egy gombra kattintva elmenthető az aktuális állapot (0,5 pont)
-- Mentés: a kezdőképernyőn megjelenik, ha van mentett állapot (0,5 pont)
-- Mentés: a kezdőképernyőn megjelenő mentett állapot betölthető (1 pont)
+- Időlimit: a kezdőkérpernyőn beállítható az időzítő értéke, és a játékosok csak a megadott ideig tudnak lépni. Az időzítő változása meg van jelenítve a játékosoknak is, és ha az letelik, az adott játékos veszít. (2 pont)
+- Egyjátékos mód: Az egyjátékos és többjátékos mód közül a kezdőképernyőn választhatunk. A játékos lépése után a második játékos lépését a számítógép végzi el, és csak olyan helyre teszi le a bábuját, ahová le tudja tenni. (3 pont)
 
 ## További elvárások
 
@@ -194,48 +209,38 @@ A feladat megoldásával 20 pont szerezhető. Vannak minimum elvárások, melyek
 
 - A `README.md` fájlban a kijelentés alatt egy üres sorral elválasztva szerepeljen az alábbi lista. Az egyes `[ ]` közötti szóközt cseréld le x-re azokra a részfeladatokra, amit sikerült (akár részben) megoldanod!
 
-  ```txt
-  Minimálisan teljesítendő (enélkül nem fogadjuk el, 8 pont)
+```txt
+Minimálisan teljesítendő (enélkül nem fogadjuk el, 6 pont)
 
-  [ ] Egyéb: A "További elvárások" részben szereplő `README.md` fájl megfelelően kitöltve szerepel a feltöltött csomagban (0 pont)
-  [ ] Játéktér: A játéktér megjelenik. (0 pont)
-  [ ] Játéktér: Egy 7x7-es rácsban megjelennek a fix elemek. (1 pont)
-  [ ] Játéktér: Ugyanebben a rácsban megjelennek véletlenszerűen forgatva és elhelyezve a mozgatható elemek. (2 pont)
-  [ ] Játéktér: A rácsra fel van helyezve legalább 3 kincs véletlen helyre (kivéve a sarkokat) (0,5 pont)
-  [ ] Játéktér: A rácsra fel van helyezve legalább 1 játékos figurája (0,5 pont)
-  [ ] Katakomba átalakítása: A kimaradt szoba becsúsztatható egy mozgatható sorba vagy oszlopba. A katakomba szobái helyesen változnak. (2 pont)
-  [ ] Lépés: A figurával szabályosan lehet lépni a szomszédos mező valamelyikére. (2 pont)
+- [ ] Egyéb: A "További elvárások" részben szereplő `README.md` fájl megfelelően kitöltve szerepel a feltöltött csomagban (0 pont)
+- [ ] Játéktér: A játéktér megjelenik. (0 pont)
+- [ ] Játéktér: Egy 4x4-es rács megjelenik, és látják a játékosok, hogy milyen alakzatok közül tudnak választani. (1 pont)
+- [ ] Játéktér: A rácsba el tudjuk helyezni a kiválasztott alakzatainkat felváltva. (2 pont)
+- [ ] Játéktér: A győzelmet vagy vereséget érzékeli az oldal és kiírja.(3 pont)
 
-  Az alap feladatok (12 pont)
+Az alap feladatok (14 pont)
 
-  [ ] Kezdőképernyő: játékosszám beállítása (0,5 pont)
-  [ ] Kezdőképernyő: játékosonkénti kincskártyák számának beállítása (0,5 pont)
-  [ ] Kezdőképernyő: Start gombra megjelenik a játéktér (0,5 pont)
-  [ ] Kezdőképernyő: megtekinthető a játékleírás (0,5 pont)
-  [ ] Játéktér: a kincsek a beállításoknak megfelelően jelennek meg (0,5 pont)
-  [ ] Játéktér: a figurák a sarkokban megjelennek (0,5 pont)
-  [ ] Játéktér: kimaradt elem megjelenik (0,5 pont)
-  [ ] Játéktér: játékosadatok megjelennek (0,5 pont)
-  [ ] Játéktér: jelezve van, hogy melyik az aktuális játékos (0,5 pont)
-  [ ] Katakomba átalakítása: a kimaradt szoba forgatható becsúsztatás előtt (0,5 pont)
-  [ ] Katakomba átalakítása: a szobák eltolása animációval történik (1 pont)
-  [ ] Katakomba átalakítása: a kincsek abban a szobában maradnak, ahova az elején generáltuk őket (0,5 pont)
-  [ ] Katakomba átalakítása: leeső figura ciklikusan a másik oldalra kerül (0,5 pont)
-  [ ] Lépés: a szomszédos elérhető szobák jelölése (0,5 pont)
-  [ ] Lépés: a lépés animációval történik (1 pont)
-  [ ] Lépés: ha elérendő kincskártyára lépünk, akkor a játékos adatlapja helyesen változik (0,5 pont)
-  [ ] Lépés: ha minden kincs megvan, és a kiindulási pontra léptünk, akkor a játék vége van (0,5 pont)
-  [ ] Lépés: több figura jól jelenik meg egy mezőn (0,5 pont)
-  [ ] Vége: a győztes játékos száma megjelenik (0,5 pont)
-  [ ] Vége: egy gombra kattintva a játék újrakezdhető a kezdőképernyőtől (0,5 pont)
-  [ ] Egyéb: Igényes kialakítás (1 pont)
+- [ ] Kezdőképernyő: játékosnév beállítása (0,5 pont)
+- [ ] Kezdőképernyő: Start gombra megjelenik a játéktér (0,5 pont)
+- [ ] Kezdőképernyő: megtekinthető a játékleírás (0,5 pont)
+- [ ] Játéktér: a játékosnevek a beállításoknak megfelelően jelennek meg, jól elkülöníthető a játékosok adatlapja  (0,5 pont)
+- [ ] Játéktér: A start gombra kattintva új játék indítható (0,5 pont)
+- [ ] Játéktér: a játék folyamán folyamatosan frissül, hogy milyen alakzataink  maradtak hátra (1 pont)
+- [ ] Játéktér: jelezve van, hogy melyik az aktuális játékos (0,5 pont)
+- [ ] Játék mechanikája: a játék valamilyen módon megjeleníti nekünk, hogy melyik cellára milyen alakzatot tudunk már csak lehelyezni (3 pont)
+- [ ] Mentés: A játék félbehagyható, mentés után a játék a félbehagyott játékok listájában megjelenik a keződőképernyőn, és a kezdőoldalról újra betölthető. (3 pont)
+- [ ] Vége: a játék végén az adott játékospárra vonatkozó statisztika mentésre kerül, kijelzi azt, és a statisztikát a főoldalról is elérjük. (2 pont)
+- [ ] Vége: a győztes játékos száma megjelenik (0,5 pont)
+- [ ] Vége: egy gombra kattintva a játék újrakezdhető a kezdőképernyőtől (0,5 pont)
+- [ ] Egyéb: Igényes kialakítás (1 pont)
+- **1 hét késés (-3 pont)**
+- **2 hét késés (-6 pont)**
+- **2 hétnél több késés (nincs elfogadva a beadandó, nincs jegy)**
 
-  Plusz feladatok (plusz 5 pont)
+Plusz feladatok (plusz 5 pont)
 
-  [ ] Lépés: minden elérhető szoba jelölése (3 pont)
-  [ ] Mentés: játék közben egy gombra kattintva elmenthető az aktuális állapot (0,5 pont)
-  [ ] Mentés: a kezdőképernyőn megjelenik, ha van mentett állapot (0,5 pont)
-  [ ] Mentés: a kezdőképernyőn megjelenő mentett állapot betölthető (1 pont)
+- [ ] Időlimit: a kezdőkérpernyőn beállítható az időzítő értéke, és a játékosok csak a megadott ideig tudnak lépni. Az időzítő változása meg van jelenítve a játékosoknak is, és ha az letelik, az adott játékos veszít. (2 pont)
+- [ ] Egyjátékos mód: Az egyjátékos és többjátékos mód közül a kezdőképernyőn választhatunk. A játékos lépése után a második játékos lépését a számítógép végzi el, és csak olyan helyre teszi le a bábuját, ahová le tudja tenni. (3 pont)
   ```
 
 A megfelelően kitöltött `README.md` fájl nélkül a megoldást nem fogadjuk el!
