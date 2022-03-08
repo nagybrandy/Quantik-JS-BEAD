@@ -9,7 +9,7 @@ Mivel a színek nem számítanak, nyerhetünk csupán úgy is, hogy mind a háro
 
 |![](pics/win1.png)    |  ![](pics/win2.png)|
 :-------------------------:|:-------------------------:|
-Ebben a játékban a piros játékos helyezte le a piros kört a második sorban, így a jobb felső területen lehelyezte a hiányzó alakzatot, és megnyerte a játékot. |  A zöld játékos helyezte le utoljára a zöld négyzetet az első sorban, így lehelyezve a hiányzó alakzatot abban a sorban, és megnyerte a játékot
+Ebben a játékban a piros játékos helyezte le a piros kört a második sorba, így a jobb felső területen lehelyezte a hiányzó alakzatot, és megnyerte a játékot. |  A zöld játékos helyezte le utoljára a zöld négyzetet az első sorban, így lehelyezve a hiányzó alakzatot abban a sorban, és megnyerte a játékot
 
 ## A játék megvalósítása
 
